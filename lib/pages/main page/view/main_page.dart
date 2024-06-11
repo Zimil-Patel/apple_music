@@ -12,14 +12,14 @@ class MainPage extends StatelessWidget {
   Widget build(BuildContext context) {
     height = MediaQuery.of(context).size.height;
     width = MediaQuery.of(context).size.width;
-    MainProvider mainProviderTrue = Provider.of<MainProvider>(context, listen: true);
-    MainProvider mainProviderFalse  = Provider.of<MainProvider>(context, listen: false);
+    MainProvider mainProviderTrue =
+        Provider.of<MainProvider>(context, listen: true);
+    MainProvider mainProviderFalse =
+        Provider.of<MainProvider>(context, listen: false);
 
     return CupertinoTabScaffold(
-
       // Bottom Tab bar items
       tabBar: CupertinoTabBar(
-
         // onTap index change
         onTap: (value) => mainProviderFalse.setTabIndex = value,
 
@@ -31,10 +31,13 @@ class MainPage extends StatelessWidget {
         height: height / 14,
       ),
 
-
       // Tab screen
       tabBuilder: (context, index) {
-        return tabScreenList[mainProviderTrue.tabIndex];
+        return HeroControllerScope(
+          controller: HeroController(),
+          child: CupertinoTabView(
+              builder: (context) => tabScreenList[mainProviderTrue.tabIndex]),
+        );
       },
     );
   }
