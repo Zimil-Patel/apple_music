@@ -1,4 +1,4 @@
-import 'package:apple_music/pages/library%20page/view/library_page.dart';
+import 'package:apple_music/pages/library%20page/library_page.dart';
 import 'package:flutter/cupertino.dart';
 
 const List<Widget> tabScreenList = [

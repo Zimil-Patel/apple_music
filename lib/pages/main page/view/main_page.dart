@@ -1,7 +1,7 @@
 import 'package:apple_music/providers/main_provider.dart';
 import 'package:apple_music/utils/constant.dart';
-import 'package:apple_music/utils/tab%20bar%20list/bottom_tab_bar_itmes.dart';
-import 'package:apple_music/utils/tab%20bar%20list/tab_bar_screen.dart';
+import 'package:apple_music/utils/lists/bottom_tab_bar_itmes.dart';
+import 'package:apple_music/utils/lists/tab_bar_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 
