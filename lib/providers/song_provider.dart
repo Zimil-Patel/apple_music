@@ -8,7 +8,6 @@ class SongProvider with ChangeNotifier, WidgetsBindingObserver {
   List<Audio> _playList = [];
   int _currentIndex = 0;
 
-
   AssetsAudioPlayer get assetsAudioPlayer => _assetsAudioPlayer;
 
   List<Audio> get playList => _playList;
@@ -26,11 +25,11 @@ class SongProvider with ChangeNotifier, WidgetsBindingObserver {
     _playList = newList;
     _currentIndex = 0;
     _assetsAudioPlayer.open(
-        Playlist(
-          audios: _playList,
-        ),
-        autoStart: true,
-      // showNotification: true,
+      Playlist(
+        audios: _playList,
+      ),
+      autoStart: true,
+      showNotification: true,
     );
     notifyListeners();
   }
@@ -67,7 +66,7 @@ class SongProvider with ChangeNotifier, WidgetsBindingObserver {
     log('--------------- Previous ---------------');
   }
 
-  void _playPreviousInPlayList(){
+  void _playPreviousInPlayList() {
     if (_currentIndex > 0) {
       _currentIndex--;
       _assetsAudioPlayer.playlistPlayAtIndex(_currentIndex);
@@ -81,5 +80,4 @@ class SongProvider with ChangeNotifier, WidgetsBindingObserver {
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
-
 }
