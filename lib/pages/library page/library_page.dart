@@ -25,7 +25,7 @@ class _LibraryPageState extends State<LibraryPage> {
         },
         child: CustomScrollView(
           slivers: [
-            // SliverNavigationbar
+            // Sliver Navigation bar
             LibrarySliverNavigationBar(scrollOffset: _scrollOffset),
 
             // Library List
