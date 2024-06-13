@@ -20,6 +20,7 @@ class MainPage extends StatelessWidget {
     return CupertinoTabScaffold(
       // Bottom Tab bar items
       tabBar: CupertinoTabBar(
+        currentIndex: mainProviderTrue.tabIndex,
         // onTap index change
         onTap: (value) => mainProviderFalse.setTabIndex = value,
 

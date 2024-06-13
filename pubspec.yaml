@@ -66,6 +66,14 @@ flutter:
   #   - images/a_dot_ham.jpeg
   assets:
     - assets/images/
+    - assets/audios/ABCD 2/
+    - assets/audios/FF/
+    - assets/audios/Weekend/
+    - assets/audios/Christina Perri/
+    - assets/audios/Karan Aujla/
+    - assets/audios/Subh/
+    - assets/audios/MS Dhoni/
+    - assets/album images/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

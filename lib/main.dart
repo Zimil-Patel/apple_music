@@ -1,5 +1,6 @@
 import 'package:apple_music/providers/main_provider.dart';
 import 'package:apple_music/pages/main%20page/view/main_page.dart';
+import 'package:apple_music/providers/song_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 
@@ -8,6 +9,7 @@ void main(){
     MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (context) => MainProvider(),),
+          ChangeNotifierProvider(create: (context) => SongProvider(),),
         ],
         child: const AppleMusic()),
   );

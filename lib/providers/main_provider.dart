@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
 class MainProvider extends ChangeNotifier {
-  int _tabIndex = 0;
+  int _tabIndex = 2;
   bool _isPinned = false;
 
   // Get current tab index
