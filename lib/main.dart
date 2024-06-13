@@ -1,5 +1,5 @@
 import 'package:apple_music/providers/main_provider.dart';
-import 'package:apple_music/pages/main%20page/view/main_page.dart';
+import 'package:apple_music/pages/main%20page/main_page.dart';
 import 'package:apple_music/providers/song_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';

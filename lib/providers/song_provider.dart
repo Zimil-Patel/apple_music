@@ -7,13 +7,24 @@ class SongProvider with ChangeNotifier, WidgetsBindingObserver {
   final AssetsAudioPlayer _assetsAudioPlayer = AssetsAudioPlayer();
   List<Audio> _playList = [];
   int _currentIndex = 0;
+  bool _isPlaying = false;
+  bool isSongIndicatorVisible = false;
+  UniqueKey playPauseAnimationKey = UniqueKey();
+  UniqueKey nextAnimationKey = UniqueKey();
 
   AssetsAudioPlayer get assetsAudioPlayer => _assetsAudioPlayer;
 
   List<Audio> get playList => _playList;
 
+  bool get isPlaying => _isPlaying;
+
   SongProvider() {
     WidgetsBinding.instance.addObserver(this);
+    _assetsAudioPlayer.isPlaying.listen((value) {
+      _isPlaying = value;
+      notifyListeners();
+    });
+
     _assetsAudioPlayer.playlistFinished.listen((isFinished) {
       if (isFinished) {
         playNext();
@@ -21,55 +32,87 @@ class SongProvider with ChangeNotifier, WidgetsBindingObserver {
     });
   }
 
-  void setPlayList(List<Audio> newList) {
-    _playList = newList;
-    _currentIndex = 0;
-    _assetsAudioPlayer.open(
-      Playlist(
-        audios: _playList,
-      ),
-      autoStart: true,
-      showNotification: true,
-    );
-    notifyListeners();
-  }
-
-  void playAudio() {
-    _assetsAudioPlayer.play();
-    log('--------------- Playing ---------------');
-  }
-
-  void pauseAudio() {
-    _assetsAudioPlayer.pause();
-    log('--------------- Pausing ---------------');
-  }
-
-  void playNext() {
-    _playNextInPlayList();
-    log('--------------- Next ---------------');
-  }
-
-  void _playNextInPlayList() {
-    _currentIndex++;
-    if (_currentIndex < _playList.length) {
-      _assetsAudioPlayer.playlistPlayAtIndex(_currentIndex);
-      notifyListeners();
-    } else {
+  Future<void> setPlayList(List<Audio> newList) async {
+    log('--------------- ${_playList == newList} ---------------');
+    if (_playList != newList) {
+      if(!isSongIndicatorVisible){
+        isSongIndicatorVisible = true;
+      }
+      log('--------------- Playlist changed $newList ---------------');
+      _playList = newList;
       _currentIndex = 0;
-      _assetsAudioPlayer.stop();
+      await _assetsAudioPlayer.open(
+        Playlist(
+          audios: _playList,
+        ),
+        autoStart: false,
+        showNotification: true,
+      );
       notifyListeners();
     }
   }
 
-  void playPrevious() {
-    _playPreviousInPlayList();
+  Future<void> playAtIndex(int index) async {
+    _currentIndex = index;
+    await _assetsAudioPlayer.playlistPlayAtIndex(_currentIndex);
+    playPauseAnimationKey = UniqueKey();
+    notifyListeners();
+    log('--------------- Playing At Index $_currentIndex ---------------');
+  }
+
+  Future<void> playAudio() async {
+    await _assetsAudioPlayer.play();
+    playPauseAnimationKey = UniqueKey();
+    log('--------------- Playing ---------------');
+  }
+
+  Future<void> playPlaylist() async {
+    _currentIndex = 0;
+    await _assetsAudioPlayer.playlistPlayAtIndex(_currentIndex);
+    playPauseAnimationKey = UniqueKey();
+    notifyListeners();
+    log('--------------- Playing PlayList ---------------');
+  }
+
+  Future<void> playOrPauseAudio() async {
+    await _assetsAudioPlayer.playOrPause();
+    playPauseAnimationKey = UniqueKey();
+    notifyListeners();
+  }
+
+  Future<void> pauseAudio() async {
+    await _assetsAudioPlayer.pause();
+    playPauseAnimationKey = UniqueKey();
+    log('--------------- Pausing ---------------');
+  }
+
+  Future<void> playNext() async {
+    await _playNextInPlayList();
+    nextAnimationKey = UniqueKey();
+    log('--------------- Next ---------------');
+  }
+
+  Future<void> _playNextInPlayList() async {
+    _currentIndex++;
+    if (_currentIndex < _playList.length) {
+      await _assetsAudioPlayer.playlistPlayAtIndex(_currentIndex);
+    } else {
+      _currentIndex = 0;
+      await _assetsAudioPlayer.stop();
+    }
+    playPauseAnimationKey = UniqueKey();
+    notifyListeners();
+  }
+
+  Future<void> playPrevious() async {
+    await _playPreviousInPlayList();
     log('--------------- Previous ---------------');
   }
 
-  void _playPreviousInPlayList() {
+  Future<void> _playPreviousInPlayList() async {
     if (_currentIndex > 0) {
       _currentIndex--;
-      _assetsAudioPlayer.playlistPlayAtIndex(_currentIndex);
+      await _assetsAudioPlayer.playlistPlayAtIndex(_currentIndex);
       notifyListeners();
     }
   }
