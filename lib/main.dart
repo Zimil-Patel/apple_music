@@ -31,7 +31,7 @@ class AppleMusic extends StatelessWidget {
       title: 'Apple Music',
 
       // MainPage()
-      builder: (context, child) => const MainPage(),
+      home: MainPage(),
     );
   }
 }

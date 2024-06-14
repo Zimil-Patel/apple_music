@@ -9,8 +9,26 @@ class SongProvider with ChangeNotifier, WidgetsBindingObserver {
   int _currentIndex = 0;
   bool _isPlaying = false;
   bool isSongIndicatorVisible = false;
+  bool _isSliding = false;
+  double _currentSliderValue = 0.0;
+  double _currentSongSliderValue = 0.0;
+
+
+  double get currentSongSliderValue => _currentSongSliderValue;
+
+  set currentSongSliderValue(double value) {
+    _currentSongSliderValue = value;
+  }
+
+  bool get isSliding => _isSliding;
+
+  set isSliding(bool value) {
+    _isSliding = value;
+  }
+
   UniqueKey playPauseAnimationKey = UniqueKey();
   UniqueKey nextAnimationKey = UniqueKey();
+  UniqueKey previousAnimationKey = UniqueKey();
 
   AssetsAudioPlayer get assetsAudioPlayer => _assetsAudioPlayer;
 
@@ -30,6 +48,7 @@ class SongProvider with ChangeNotifier, WidgetsBindingObserver {
         playNext();
       }
     });
+
   }
 
   Future<void> setPlayList(List<Audio> newList) async {
@@ -99,13 +118,14 @@ class SongProvider with ChangeNotifier, WidgetsBindingObserver {
     } else {
       _currentIndex = 0;
       await _assetsAudioPlayer.stop();
+      await _assetsAudioPlayer.playlistPlayAtIndex(_currentIndex);
     }
     playPauseAnimationKey = UniqueKey();
     notifyListeners();
   }
 
   Future<void> playPrevious() async {
-    await _playPreviousInPlayList();
+    await _assetsAudioPlayer.previous();
     log('--------------- Previous ---------------');
   }
 
@@ -113,6 +133,7 @@ class SongProvider with ChangeNotifier, WidgetsBindingObserver {
     if (_currentIndex > 0) {
       _currentIndex--;
       await _assetsAudioPlayer.playlistPlayAtIndex(_currentIndex);
+      previousAnimationKey = UniqueKey();
       notifyListeners();
     }
   }
@@ -122,5 +143,11 @@ class SongProvider with ChangeNotifier, WidgetsBindingObserver {
     _assetsAudioPlayer.dispose();
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
+  }
+
+  double get currentSliderValue => _currentSliderValue;
+
+  set currentSliderValue(double value) {
+    _currentSliderValue = value;
   }
 }
