@@ -1,11 +1,30 @@
 import 'dart:developer';
 
+import 'package:apple_music/model/radio_model.dart';
+import 'package:apple_music/utils/lists/radio_list.dart';
+import 'package:apple_music/utils/lists/song_list.dart';
 import 'package:assets_audio_player/assets_audio_player.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class SongProvider with ChangeNotifier, WidgetsBindingObserver {
   final AssetsAudioPlayer _assetsAudioPlayer = AssetsAudioPlayer();
   List<Audio> _playList = [];
+  List<Audio> _allSongList = [];
+  List<RadioModel> _radioModelList = [];
+
+
+  List<RadioModel> get radioModelList => _radioModelList;
+
+  set radioModelList(List<RadioModel> value) {
+    _radioModelList = value;
+  }
+
+  List<Audio> get allSongList => _allSongList;
+
+  set allSongList(List<Audio> value) {
+    _allSongList = value;
+  }
+
   int _currentIndex = 0;
   bool _isPlaying = false;
   bool isSongIndicatorVisible = false;
@@ -37,6 +56,15 @@ class SongProvider with ChangeNotifier, WidgetsBindingObserver {
   bool get isPlaying => _isPlaying;
 
   SongProvider() {
+
+    radioModelList = radioList.map<RadioModel>((e) => RadioModel.fromJson(e),).toList();
+    
+    for (String i in songList.keys.toList()){
+      _allSongList.addAll(songList[i]);
+    }
+
+    _allSongList.sort((a, b) => a.metas.title!.compareTo(b.metas.title!));
+
     WidgetsBinding.instance.addObserver(this);
     _assetsAudioPlayer.isPlaying.listen((value) {
       _isPlaying = value;
@@ -57,7 +85,6 @@ class SongProvider with ChangeNotifier, WidgetsBindingObserver {
       if(!isSongIndicatorVisible){
         isSongIndicatorVisible = true;
       }
-      log('--------------- Playlist changed $newList ---------------');
       _playList = newList;
       _currentIndex = 0;
       await _assetsAudioPlayer.open(

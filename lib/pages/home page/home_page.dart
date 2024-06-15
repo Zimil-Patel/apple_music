@@ -4,22 +4,22 @@ import 'package:apple_music/providers/song_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 
-class LibraryPage extends StatefulWidget {
-  const LibraryPage({super.key});
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
 
   @override
   // ignore: library_private_types_in_public_api
-  _LibraryPageState createState() => _LibraryPageState();
+  _HomePageState createState() => _HomePageState();
 }
 
-class _LibraryPageState extends State<LibraryPage> {
+class _HomePageState extends State<HomePage> {
   double _scrollOffset = 0.0;
 
   @override
   Widget build(BuildContext context) {
 
-  SongProvider songProviderTrue = Provider.of<SongProvider>(context, listen: true);
-  SongProvider songProviderFalse = Provider.of<SongProvider>(context, listen: false);
+    SongProvider songProviderTrue = Provider.of<SongProvider>(context, listen: true);
+    SongProvider songProviderFalse = Provider.of<SongProvider>(context, listen: false);
 
     return CupertinoPageScaffold(
       child: NotificationListener<ScrollNotification>(
@@ -32,7 +32,7 @@ class _LibraryPageState extends State<LibraryPage> {
         child: CustomScrollView(
           slivers: [
             // Sliver Navigation bar
-            LibrarySliverNavigationBar(scrollOffset: _scrollOffset, title: 'Library',),
+            LibrarySliverNavigationBar(scrollOffset: _scrollOffset, title: 'Home',),
 
             // Library List
             SliverPadding(
@@ -42,8 +42,19 @@ class _LibraryPageState extends State<LibraryPage> {
                       .bottom), // Add padding at the bottom
               sliver: SliverList(
                 delegate: SliverChildBuilderDelegate(
-                  (BuildContext context, int index) {
-                    return LibraryCupertinoList(songProviderTrue: songProviderTrue, songProviderFalse: songProviderFalse,);
+                      (BuildContext context, int index) {
+                    return AspectRatio(aspectRatio: 0.8,
+                    child: Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                      decoration: BoxDecoration(
+                        image: const DecorationImage(
+                          fit: BoxFit.cover,
+                          image: AssetImage('assets/images/subscription.png'),
+                        ),
+                        borderRadius: BorderRadius.circular(10),
+                        color: CupertinoTheme.of(context).scaffoldBackgroundColor,
+                      ),
+                    ),);
                   },
                   childCount: 1,
                 ),
