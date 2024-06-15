@@ -75,15 +75,14 @@ class _SearchPageState extends State<SearchPage> {
                                   borderRadius: BorderRadius.circular(10),
                                   image: DecorationImage(
                                     fit: BoxFit.cover,
-                                    opacity: 0.5,
+                                    opacity: 0.8,
                                     image: NetworkImage(musicCategories[index]['img'])
                                   ),
-                                  color: CupertinoTheme.of(context).scaffoldBackgroundColor,
                                 ),
                                 alignment: Alignment.bottomLeft,
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
-                                  child: Text(musicCategories[index]['type'], style: TextStyle(fontWeight: FontWeight.w600),),
+                                  child: Text(musicCategories[index]['type'], style: TextStyle(fontWeight: FontWeight.w600, color: Colors.white),),
                                 ),
                               );
                             },)
