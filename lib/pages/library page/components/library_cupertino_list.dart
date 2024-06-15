@@ -1,3 +1,4 @@
+import 'package:apple_music/pages/song%20page/song_page.dart';
 import 'package:apple_music/providers/song_provider.dart';
 import 'package:apple_music/utils/constant.dart';
 import 'package:apple_music/utils/lists/library_list.dart';
@@ -32,7 +33,11 @@ class LibraryCupertinoList extends StatelessWidget {
               libraryList.length,
               (index) => CupertinoListTile(
                 backgroundColor: Colors.transparent,
-                onTap: () {},
+                onTap: () {
+                  if (libraryList[index]['title'] == 'Songs'){
+                    Navigator.push(context, CupertinoPageRoute(builder: (context) => const SongPage(),));
+                  }
+                },
                 leading: Icon(
                   libraryList[index]['icon'],
                   size: height * 0.024,

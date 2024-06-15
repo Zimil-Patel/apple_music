@@ -22,7 +22,7 @@ class _SearchBarDelegate extends SliverPersistentHeaderDelegate {
       BuildContext context, double shrinkOffset, bool overlapsContent) {
     return Container(
       padding: const EdgeInsets.only(left: 8, right: 8, bottom: 8),
-      height: 43,
+      height: 38,
       width: width,
       decoration: BoxDecoration(
         color: CupertinoTheme.of(context).scaffoldBackgroundColor,
@@ -38,10 +38,10 @@ class _SearchBarDelegate extends SliverPersistentHeaderDelegate {
   }
 
   @override
-  double get maxExtent => 43.0; // Adjust this as needed
+  double get maxExtent => 38.0; // Adjust this as needed
 
   @override
-  double get minExtent => 43.0; // Adjust this as needed
+  double get minExtent => 38.0; // Adjust this as needed
 
   @override
   bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) {
