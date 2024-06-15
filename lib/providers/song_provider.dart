@@ -112,9 +112,12 @@ class SongProvider with ChangeNotifier, WidgetsBindingObserver {
   }
 
   Future<void> _playNextInPlayList() async {
-    _currentIndex++;
-    if (_currentIndex < _playList.length) {
-      await _assetsAudioPlayer.playlistPlayAtIndex(_currentIndex);
+    bool isPlayListFinished = false;
+    _assetsAudioPlayer.playlistFinished.listen((value) {
+        isPlayListFinished = value;
+    });
+    if (!isPlayListFinished) {
+      await _assetsAudioPlayer.next();
     } else {
       _currentIndex = 0;
       await _assetsAudioPlayer.stop();
@@ -126,6 +129,8 @@ class SongProvider with ChangeNotifier, WidgetsBindingObserver {
 
   Future<void> playPrevious() async {
     await _assetsAudioPlayer.previous();
+    previousAnimationKey = UniqueKey();
+    notifyListeners();
     log('--------------- Previous ---------------');
   }
 
