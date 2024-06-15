@@ -59,6 +59,7 @@ The `assets_audio_player` package provides the following features:
 ## Video Preview 🎥
 
 
+https://github.com/Zimil-Patel/apple_music/assets/112332000/33f7135e-5cf4-4989-98b5-c3a034e89b45
 
 
 
