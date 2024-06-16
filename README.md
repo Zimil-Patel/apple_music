@@ -28,6 +28,8 @@ The `assets_audio_player` package provides the following features:
 - Notification controls for Android and iOS
 - Background playback
 
+👉 LinkedIn (https://www.linkedin.com/posts/zimil-patel_flutter-appdevelopment-musicapp-activity-7208130473678561282-p6NP?utm_source=share&utm_medium=member_desktop)
+
 ## App Screenshots
 
 ### Dark Theme
